@@ -15,7 +15,7 @@ input,select,textarea{width:100%;padding:11px 12px;border-radius:12px;border:1px
 button{border:0;border-radius:12px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer;background:#24304e;color:var(--ink)}
 button.pri{background:var(--acc);color:#1b1407}button:disabled{opacity:.5}
 .drop{border:2px dashed var(--line);border-radius:16px;padding:26px;text-align:center;color:var(--mut);cursor:pointer}
-.drop.on{border-color:var(--acc);color:var(--ink)}
+.drop.on{border-color:var(--acc);color:var(--ink)}.seg{display:flex;gap:8px}.seg button{flex:1}.seg button[aria-pressed="true"]{background:var(--acc);color:#1b1407}#setup.done .row,#setup.done>p.mut,#setup.done #appurl{display:none!important}
 .items{display:grid;gap:12px}.item{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:start;background:#0f1730;border:1px solid var(--line);border-radius:14px;padding:10px}
 .item img{width:96px;height:128px;object-fit:cover;border-radius:10px;background:#000}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
@@ -30,7 +30,7 @@ code{background:#0e1629;border:1px solid var(--line);border-radius:8px;padding:2
 <p class="mut">من هنا تضيف صور جديدة لمتجر «أهل اليقين». الصورة تطلع عند كل الناس بالتطبيق خلال دقائق، وبدون تحديث التطبيق.</p>
 
 <section class="card" id="setup">
-<h2>١) الربط (مرة وحدة بس)</h2>
+<h2>الربط</h2>
 <p class="mut">الصور تنحفظ بمستودع GitHub مجاني. الخطوات مكتوبة بملف UPDATE داخل الحزمة.</p>
 <div class="row">
 <div><label>اسم حسابك بـ GitHub</label><input id="owner" placeholder="مثلاً adamdesign" autocomplete="off"></div>
@@ -45,15 +45,17 @@ code{background:#0e1629;border:1px solid var(--line);border-radius:8px;padding:2
 </section>
 
 <section class="card" id="add" hidden>
-<h2>٢) أضف صور جديدة</h2>
-<div class="drop" id="drop">اسحب الصور هنا أو اضغط حتى تختار (تگدر تختار هواية صور مرة وحدة)<input id="files" type="file" accept="image/*" multiple hidden></div>
-<div class="items" id="queue" style="margin-top:12px"></div>
-<p style="margin:12px 0 0"><button class="pri" id="publish" disabled>نشر الصور بالمتجر</button></p>
+<h2>أضف صور</h2>
+<p class="mut" style="margin:0 0 8px">القسم:</p>
+<div class="seg" id="catSeg"><button type="button" data-c="cinema">خلفيات فنية</button><button type="button" data-c="shrines">المراقد</button></div>
+<div class="drop" id="drop" style="margin-top:12px"><b style="font-size:20px;color:var(--ink)">＋ اختار صور</b><br>تختارها وتنرفع وحدها، بدون ما تكتب شي<input id="files" type="file" accept="image/*" multiple hidden></div>
+<div class="items" id="queue" style="margin-top:12px" hidden></div>
+<p style="margin:0" hidden><button class="pri" id="publish" disabled>نشر</button></p>
 <div id="log"></div>
 </section>
 
 <section class="card" id="list" hidden>
-<h2>٣) الصور الموجودة بالمتجر <small id="cnt"></small></h2>
+<h2>الصور الموجودة بالمتجر <small id="cnt"></small></h2>
 <div class="grid" id="grid"></div>
 </section>
 </main>
@@ -73,15 +75,17 @@ async function loadCat(){const r=await api('catalog.json');if(r.status===404){ca
 async function saveCat(msg){for(let i=0;i<2;i++){const r=await api('catalog.json',{method:'PUT',body:JSON.stringify({message:msg,content:b64u(JSON.stringify(cat,null,1)),sha:catSha||undefined,branch:cfg.branch})});if(r.ok){catSha=(await r.json()).content.sha;return;}if(r.status===409||r.status===422){const keep=cat.images;await loadCat();const ids=new Set(cat.images.map(x=>x.id));keep.forEach(x=>{if(!ids.has(x.id))cat.images.unshift(x);});continue;}throw new Error('حفظ القائمة '+r.status);}}
 function render(){$('cnt').textContent='('+cat.images.length+')';$('grid').innerHTML='';cat.images.forEach(im=>{const d=document.createElement('div');d.className='cell';d.innerHTML='<img loading="lazy" alt=""><div></div><button type="button">حذف</button>';d.querySelector('img').src=rawBase()+im.file;d.querySelector('div').textContent=im.title;d.querySelector('button').onclick=()=>del(im,d);$('grid').appendChild(d);});}
 async function del(im,el){if(!confirm('تحذف «'+im.title+'» من المتجر؟'))return;try{cat.images=cat.images.filter(x=>x.id!==im.id);await saveCat('حذف '+im.id);const g=await api(im.file);if(g.ok){const j=await g.json();await api(im.file,{method:'DELETE',body:JSON.stringify({message:'حذف '+im.file,sha:j.sha,branch:cfg.branch})});}el.remove();$('cnt').textContent='('+cat.images.length+')';}catch(e){alert('ما گدرت أحذف: '+e.message);}}
-$('connect').onclick=async()=>{save();if(!cfg.owner||!cfg.repo||!cfg.token){$('cstat').textContent='اكتب الحساب والمستودع والمفتاح';return;}$('cstat').textContent='جاري الربط…';try{await loadCat();$('cstat').innerHTML='<span class="ok">✓ مربوط</span>';$('add').hidden=false;$('list').hidden=false;$('appurl').hidden=false;$('appurlv').textContent=rawBase()+'catalog.json';render();}catch(e){$('cstat').innerHTML='<span class="no">✗ ما انربط: '+e.message+' — تأكد من الاسم والمفتاح</span>';}};
+$('connect').onclick=async()=>{save();if(!cfg.owner||!cfg.repo||!cfg.token){$('cstat').textContent='اكتب الحساب والمستودع والمفتاح';return;}$('cstat').textContent='جاري الربط…';try{await loadCat();$('cstat').innerHTML='<span class="ok">✓ مربوط</span>';$('setup').classList.add('done');$('add').hidden=false;$('list').hidden=false;$('appurl').hidden=false;$('appurlv').textContent=rawBase()+'catalog.json';render();}catch(e){$('cstat').innerHTML='<span class="no">✗ ما انربط: '+e.message+' — تأكد من الاسم والمفتاح</span>';}};
+if(localStorage.getItem('store657-token')&&localStorage.getItem('store657-owner'))setTimeout(()=>$('connect').click(),50);
 $('copyurl').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText($('appurlv').textContent);$('copyurl').textContent='انسخ ✓';};
 const drop=$('drop');drop.onclick=()=>$('files').click();$('files').onchange=e=>addFiles(e.target.files);
 drop.ondragover=e=>{e.preventDefault();drop.classList.add('on');};drop.ondragleave=()=>drop.classList.remove('on');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('on');addFiles(e.dataTransfer.files);};
 function slug(s){return (s||'img').toLowerCase().replace(/\.[a-z0-9]+$/,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,30)||'img';}
-function addFiles(list){[...list].filter(f=>/^image\//.test(f.type)).forEach(f=>{const q={file:f,id:slug(f.name)+'-'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),title:'',sub:'',category:'cinema'};queue.push(q);const d=document.createElement('div');d.className='item';d.innerHTML='<img alt=""><div><label>العنوان</label><input data-k="title" placeholder="مثلاً: كربلاء ليلاً"><label>وصف قصير</label><input data-k="sub" placeholder="اختياري"><label>القسم</label><select data-k="category">'+CATS.map(c=>'<option value="'+c[0]+'"'+(c[0]==='cinema'?' selected':'')+'>'+c[1]+'</option>').join('')+'</select><p style="margin:8px 0 0"><button type="button" data-rm>شيلها</button></p></div>';d.querySelector('img').src=URL.createObjectURL(f);d.querySelectorAll('[data-k]').forEach(i=>i.oninput=i.onchange=()=>{q[i.dataset.k]=i.value;});d.querySelector('[data-rm]').onclick=()=>{queue=queue.filter(x=>x!==q);d.remove();$('publish').disabled=!queue.length;};q.el=d;$('queue').appendChild(d);});$('publish').disabled=!queue.length;}
+let curCat=localStorage.getItem('store657-cat')||'cinema';function paintCat(){document.querySelectorAll('#catSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.c===curCat)));}document.querySelectorAll('#catSeg button').forEach(b=>b.onclick=()=>{curCat=b.dataset.c;localStorage.setItem('store657-cat',curCat);paintCat();});paintCat();
+function addFiles(list){[...list].filter(f=>/^image\//.test(f.type)||/\.(heic|heif|jpe?g|png|webp)$/i.test(f.name)).forEach(f=>{const q={file:f,id:slug(f.name)+'-'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),title:'',sub:'',category:curCat};queue.push(q);const d=document.createElement('div');d.className='item';d.innerHTML='<img alt=""><div><label>العنوان</label><input data-k="title" placeholder="مثلاً: كربلاء ليلاً"><label>وصف قصير</label><input data-k="sub" placeholder="اختياري"><label>القسم</label><select data-k="category">'+CATS.map(c=>'<option value="'+c[0]+'"'+(c[0]==='cinema'?' selected':'')+'>'+c[1]+'</option>').join('')+'</select><p style="margin:8px 0 0"><button type="button" data-rm>شيلها</button></p></div>';d.querySelector('img').src=URL.createObjectURL(f);d.querySelectorAll('[data-k]').forEach(i=>i.oninput=i.onchange=()=>{q[i.dataset.k]=i.value;});d.querySelector('[data-rm]').onclick=()=>{queue=queue.filter(x=>x!==q);d.remove();$('publish').disabled=!queue.length;};q.el=d;$('queue').appendChild(d);});$('publish').disabled=!queue.length;$('files').value='';if(queue.length)$('publish').click();}
 function toB64(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(blob);});}
 async function shrink(file){try{const bmp=await createImageBitmap(file);const max=2400,s=Math.min(1,max/Math.max(bmp.width,bmp.height));const c=document.createElement('canvas');c.width=Math.round(bmp.width*s);c.height=Math.round(bmp.height*s);c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);let b=await new Promise(r=>c.toBlob(r,'image/webp',0.88));if(!b||b.type!=='image/webp')b=await new Promise(r=>c.toBlob(r,'image/jpeg',0.9));return b||file;}catch(e){return file;}}
-$('publish').onclick=async()=>{const btn=$('publish');btn.disabled=true;$('log').innerHTML='';let done=0;for(const q of queue.slice()){try{if(!q.title){q.title=q.file.name.replace(/\.[^.]+$/,'');}log('جاري رفع: '+q.title+' …');const blob=await shrink(q.file);const ext=blob.type==='image/webp'?'webp':blob.type==='image/png'?'png':'jpg';const path='images/'+q.id+'.'+ext;const r=await api(path,{method:'PUT',body:JSON.stringify({message:'صورة جديدة: '+q.title,content:await toB64(blob),branch:cfg.branch})});if(!r.ok)throw new Error('رفع الصورة '+r.status);cat.images.unshift({id:q.id,title:q.title,sub:q.sub||'',category:q.category||'cinema',file:path,added:new Date().toISOString().slice(0,10)});await saveCat('إضافة '+q.title);q.el.remove();queue=queue.filter(x=>x!==q);done++;log('✓ '+q.title,'ok');}catch(e){log('✗ '+(q.title||q.file.name)+': '+e.message,'no');}}log(done?'انتهى. الصور تطلع بالتطبيق خلال ٥ دقائق تقريباً.':'ما انرفعت ولا صورة.',done?'ok':'no');render();btn.disabled=!queue.length;};
+$('publish').onclick=async()=>{const btn=$('publish');btn.disabled=true;$('log').innerHTML='';let done=0;for(const q of queue.slice()){try{if(!q.title){q.title=q.category==='shrines'?'من المراقد المقدسة':'خلفية جديدة';}log('جاري رفع الصورة '+(done+1)+' …');const blob=await shrink(q.file);const ext=blob.type==='image/webp'?'webp':blob.type==='image/png'?'png':'jpg';const path='images/'+q.id+'.'+ext;const r=await api(path,{method:'PUT',body:JSON.stringify({message:'صورة جديدة: '+q.title,content:await toB64(blob),branch:cfg.branch})});if(!r.ok)throw new Error('رفع الصورة '+r.status);cat.images.unshift({id:q.id,title:q.title,sub:q.sub||'',category:q.category||'cinema',file:path,added:new Date().toISOString().slice(0,10)});await saveCat('إضافة '+q.title);q.el.remove();queue=queue.filter(x=>x!==q);done++;log('✓ انرفعت الصورة '+done,'ok');}catch(e){log('✗ '+(q.title||q.file.name)+': '+e.message,'no');}}log(done?'انتهى. الصور تطلع بالتطبيق خلال ٥ دقائق تقريباً.':'ما انرفعت ولا صورة.',done?'ok':'no');render();btn.disabled=!queue.length;};
 })();
 </script>
 </body>
