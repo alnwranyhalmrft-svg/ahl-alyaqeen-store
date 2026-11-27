@@ -15,14 +15,14 @@ input,select,textarea{width:100%;padding:11px 12px;border-radius:12px;border:1px
 button{border:0;border-radius:12px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer;background:#24304e;color:var(--ink)}
 button.pri{background:var(--acc);color:#1b1407}button:disabled{opacity:.5}
 .drop{border:2px dashed var(--line);border-radius:16px;padding:26px;text-align:center;color:var(--mut);cursor:pointer}
-.drop.on{border-color:var(--acc);color:var(--ink)}.seg{display:flex;gap:8px}.seg button{flex:1}.seg2{flex-wrap:wrap}.seg2 button{flex:1 1 auto}.cell{position:relative}#selTools[hidden]{display:none!important}.cell.sel{outline:3px solid var(--acc)}.cell .chk{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center;font-size:16px}.cell .sec{display:block;color:var(--acc);font-size:11px}.seg button[aria-pressed="true"]{background:var(--acc);color:#1b1407}#setup.done .row,#setup.done>p.mut,#setup.done #appurl{display:none!important}
+.drop.on{border-color:var(--acc);color:var(--ink)}.seg{display:flex;gap:8px}.seg button{flex:1}.seg2{flex-wrap:wrap}.seg2 button{flex:1 1 auto}.cell{position:relative}#selTools[hidden],#vgoRow[hidden]{display:none!important}.cell.sel{outline:3px solid var(--acc)}.cell .chk{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center;font-size:16px}.cell .sec{display:block;color:var(--acc);font-size:11px}.seg button[aria-pressed="true"]{background:var(--acc);color:#1b1407}#setup.done .row,#setup.done>p.mut,#setup.done #appurl{display:none!important}
 .items{display:grid;gap:12px}.item{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:start;background:#0f1730;border:1px solid var(--line);border-radius:14px;padding:10px}
 .item img{width:96px;height:128px;object-fit:cover;border-radius:10px;background:#000}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
 .cell{background:#0f1730;border:1px solid var(--line);border-radius:12px;overflow:hidden}.cell img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}.cell div{padding:6px 8px;font-size:12px}.cell button{width:100%;border-radius:0;background:#3a1f25;color:#ffb3ab;padding:7px;font-size:12px}
 #log{white-space:pre-wrap;font-size:13px;color:var(--mut)}.ok{color:var(--ok)}.no{color:var(--no)}
 code{background:#0e1629;border:1px solid var(--line);border-radius:8px;padding:2px 6px;direction:ltr;display:inline-block;word-break:break-all}
-#sync675{position:fixed;inset:0;z-index:50;background:rgba(5,9,20,.8);display:flex;justify-content:center;overflow:auto}.sy-box{width:100%;max-width:720px;background:var(--bg);min-height:100%;padding:12px 14px 40px}.sy-top{display:flex;gap:10px;align-items:center;margin-bottom:10px}.sy-top b{display:block;font-size:17px}.sy-top small{color:var(--mut)}.sy-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.sy-time{font:700 18px monospace;min-width:110px;direction:ltr}.sy-now{margin:12px 0 8px;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--line)}.sy-now p{margin:6px 0 0;font-size:22px;line-height:1.9}.sy-now small{color:var(--acc)}.sy-mark{width:100%;padding:22px!important;font-size:20px!important;background:var(--acc)!important;color:#1b1407!important;position:sticky;top:0;z-index:2}.sy-list{display:grid;gap:4px;max-height:45vh;overflow:auto;margin-top:8px}.sy-row{display:flex;gap:10px;text-align:right;background:#0f1730!important;font-weight:400!important;padding:8px 10px!important}.sy-row em{font-style:normal;font-family:monospace;color:var(--mut);min-width:46px}.sy-row.ok em{color:var(--ok)}.sy-row.on{outline:2px solid var(--acc)}.sy-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px}.sy-err{color:var(--no)}.sy-file{display:inline-block;color:var(--acc);text-decoration:underline;cursor:pointer;margin:0}
+#sync675{position:fixed;inset:0;z-index:50;background:rgba(5,9,20,.8);display:flex;justify-content:center;overflow:auto}.sy-box{width:100%;max-width:720px;background:var(--bg);min-height:100%;padding:12px 14px 40px}.sy-top{display:flex;gap:10px;align-items:center;margin-bottom:10px}.sy-top b{display:block;font-size:17px}.sy-top small{color:var(--mut)}.sy-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.sy-time{font:700 18px monospace;min-width:110px;direction:ltr}.sy-now{margin:12px 0 8px;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--line)}.sy-now p{margin:6px 0 0;font-size:22px;line-height:1.9}.sy-now small{color:var(--acc)}.sy-mark{width:100%;padding:22px!important;font-size:20px!important;background:var(--acc)!important;color:#1b1407!important;position:sticky;top:0;z-index:2}.sy-list{display:grid;gap:4px;max-height:45vh;overflow:auto;margin-top:8px}.sy-row{display:flex;gap:10px;text-align:right;background:#0f1730!important;font-weight:400!important;padding:8px 10px!important}.sy-row em{font-style:normal;font-family:monospace;color:var(--mut);min-width:46px}.sy-row.ok em{color:var(--ok)}.sy-row.on{outline:2px solid var(--acc)}.sy-row.au em{color:#7fb3ff}.sy-row.pl{background:#1d2b55!important}.sy-row.pl span{color:#fff;font-weight:700}.sy-auto{width:100%;margin-top:10px;padding:16px!important;font-size:18px!important;background:#2f6fe0!important;color:#fff!important}.sy-auto:disabled{opacity:.4}.sy-an{margin:6px 0 0;min-height:1.4em}.sy-steps{background:#0f1730;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px;font-size:14px;line-height:1.9;color:var(--mut)}.sy-steps b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--acc);color:#1b1407;font-size:12px;margin:0 2px}.sy-steps u{color:var(--ink)}.sy-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px}.sy-err{color:var(--no)}.sy-file{display:inline-block;color:var(--acc);text-decoration:underline;cursor:pointer;margin:0}
 </style>
 </head>
 <body>
@@ -62,7 +62,7 @@ code{background:#0e1629;border:1px solid var(--line);border-radius:8px;padding:2
 <div class="seg" id="vSeg"><button type="button" data-t="dua" aria-pressed="true">دعاء أو زيارة</button><button type="button" data-t="shia">أذان شيعي</button><button type="button" data-t="sunni">أذان سنّي</button></div>
 <div class="drop" id="vdrop" style="margin-top:12px"><b style="font-size:20px;color:var(--ink)">＋ اختار ملفات صوت</b><br>MP3 من تلفونك — البرنامج يعرف اسم الدعاء والقارئ من اسم الملف<input id="vfiles" type="file" accept="audio/*,.mp3,.m4a,.aac,.wav" multiple hidden></div>
 <div class="items" id="vqueue" style="margin-top:12px" hidden></div>
-<p style="margin:10px 0 0" id="vgoRow" hidden><button class="pri" id="vgo">⬆ ارفع الكل</button></p>
+<p style="margin:10px 0 0;display:flex;gap:8px;flex-wrap:wrap" id="vgoRow" hidden><button class="pri" id="vgo">⬆ ارفع الكل</button><button type="button" id="vclr">🧹 امسح القائمة</button></p>
 <div id="vlog"></div>
 </section>
 <section class="card" id="vlist" hidden>
@@ -156,7 +156,7 @@ $('vSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;vtype=b.da
 const vdrop=$('vdrop');vdrop.onclick=()=>$('vfiles').click();$('vfiles').onchange=e=>{addV(e.target.files);e.target.value='';};
 vdrop.ondragover=e=>{e.preventDefault();vdrop.classList.add('on');};vdrop.ondragleave=()=>vdrop.classList.remove('on');vdrop.ondrop=e=>{e.preventDefault();vdrop.classList.remove('on');addV(e.dataTransfer.files);};
 function paintQ(q){const d=q.el;const isAd=q.type!=='dua';d.innerHTML='<div style="font-size:30px;text-align:center">'+(isAd?'📢':'📿')+'</div><div><label>اسم القارئ / المؤذن</label><input class="vn"><div class="vi"'+(isAd?' hidden':'')+'><label>الدعاء أو الزيارة</label><select class="vs"><option value="">— اختار —</option>'+ITEMS.map(i=>'<option value="'+i[0]+'">'+i[1]+'</option>').join('')+'</select></div><small class="vst"></small></div>';
- d.querySelector('.vn').value=q.name;d.querySelector('.vn').oninput=e=>{q.name=e.target.value.trim();};const sel=d.querySelector('.vs');sel.value=q.item;sel.onchange=e=>{q.item=e.target.value;};d.querySelector('.vst').textContent=q.file.name+' · '+(q.file.size/1048576).toFixed(1)+' MB'+(isAd?' · '+(q.type==='sunni'?'أذان سنّي':'أذان شيعي'):'');}
+ d.querySelector('.vn').value=q.name;d.querySelector('.vn').oninput=e=>{q.name=e.target.value.trim();};const sel=d.querySelector('.vs');sel.value=q.item;sel.onchange=e=>{q.item=e.target.value;};d.querySelector('.vst').textContent=q.file.name+' · '+(q.file.size/1048576).toFixed(1)+' MB'+(isAd?' · '+(q.type==='sunni'?'أذان سنّي':'أذان شيعي'):'');const rm=document.createElement('button');rm.type='button';rm.textContent='✕ شيلها';rm.style.cssText='margin-top:8px;background:#3a1f25;color:#ffb3ab;padding:8px 14px';rm.onclick=()=>{if(q.state==='up')return;vq=vq.filter(x=>x!==q);d.remove();if(!vq.length){$('vqueue').hidden=true;$('vgoRow').hidden=true;}};d.children[1].appendChild(rm);}
 function addV(files){[...files].forEach(f=>{const n=f.name;let t=vtype;if(/اذان|أذان|azan|adhan|athan/i.test(n)&&t==='dua')t='shia';const q={file:f,type:t,name:guessName(n),item:guessItem(n),state:'wait',el:document.createElement('div')};q.el.className='item';q.el.style.gridTemplateColumns='48px 1fr';vq.push(q);$('vqueue').appendChild(q.el);paintQ(q);});$('vqueue').hidden=false;$('vgoRow').hidden=false;
  if(vq.filter(q=>q.state==='wait').every(q=>q.name&&(q.type!=='dua'||q.item)))setTimeout(()=>$('vgo').click(),600);}
 function fileB64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=()=>rej(r.error);r.readAsDataURL(f);});}
@@ -170,6 +170,7 @@ $('vgo').onclick=async()=>{const todo=vq.filter(q=>q.state==='wait');for(const q
   await saveV('إضافة '+q.name);q.state='done';st.innerHTML='<span class="ok">✓ انرفع — يطلع بالتطبيق خلال دقائق</span>';renderV();}
  catch(e){q.state='wait';st.innerHTML='<span class="no">✗ '+e.message+'</span>';}}
  $('vgo').disabled=false;};
+$('vclr').onclick=()=>{vq=vq.filter(q=>{if(q.state==='up')return true;q.el.remove();return false;});if(!vq.length){$('vqueue').hidden=true;$('vgoRow').hidden=true;}};
 const conn0=$('connect').onclick;$('connect').onclick=async()=>{await conn0();if(!$('setup').classList.contains('done'))return;try{await loadV();$('vadd').hidden=false;$('vlist').hidden=false;renderV();}catch(e){$('vlog').innerHTML='<span class="no">ما گدرت أفتح الأصوات: '+e.message+'</span>';}};
 
 // ================== الختمة الجماعية: ربط Firebase ==================
@@ -225,44 +226,90 @@ const conn3=$('connect').onclick;$('connect').onclick=async()=>{await conn3();if
 let DT=null;
 async function loadDT(){if(DT)return DT;for(const u of ['duas-text.json',rawBase()+'duas-text.json']){try{const r=await fetch(u,{cache:'no-store'});if(r.ok){DT=await r.json();return DT;}}catch(e){}}throw new Error('ملف duas-text.json مو موجود بالمستودع — ارفعه ويّا store-admin.html');}
 const fmt=s=>{s=Math.max(0,s||0);const m=Math.floor(s/60),x=Math.floor(s%60);return m+':'+String(x).padStart(2,'0');};
+// ---- تحليل الصوت: يلگي الوقفات حتى يزامن وحده ----
+const AN={};
+async function analyzeAudio(src,onp){if(AN[src])return AN[src];onp&&onp('⏳ جاري تنزيل الصوت…');
+ const buf=await (await fetch(src)).arrayBuffer();onp&&onp('⏳ جاري تحليل الصوت…');let ab=null;
+ for(const sr of [4000,8000,22050]){try{const c=new OfflineAudioContext(1,1,sr);ab=await c.decodeAudioData(buf.slice(0));break;}catch(e){}}
+ if(!ab){try{const C=window.AudioContext||window.webkitAudioContext;const c=new C();ab=await c.decodeAudioData(buf.slice(0));c.close();}catch(e){throw new Error('ما گدرت أقرا ملف الصوت');}}
+ const sr=ab.sampleRate,fl=Math.max(1,Math.round(sr*0.02)),n=Math.floor(ab.length/fl),ch=[];for(let c=0;c<ab.numberOfChannels;c++)ch.push(ab.getChannelData(c));
+ const db=new Float32Array(n);for(let i=0;i<n;i++){let s=0;for(const d of ch){for(let k=i*fl,e=k+fl;k<e;k++)s+=d[k]*d[k];}db[i]=10*Math.log10(s/(fl*ch.length)+1e-10);}
+ const sm=new Float32Array(n);for(let i=0;i<n;i++){let a=0,c=0;for(let k=Math.max(0,i-2);k<=Math.min(n-1,i+2);k++){a+=db[k];c++;}sm[i]=a/c;}
+ const sorted=Array.from(sm).sort((a,b)=>a-b);const lo=sorted[Math.floor(n*0.08)],hi=sorted[Math.floor(n*0.9)],thr=lo+0.32*(hi-lo);
+ const pauses=[];let st=-1;for(let i=0;i<n;i++){const q=sm[i]<thr;if(q&&st<0)st=i;if((!q||i===n-1)&&st>=0){const len=(i-st)*0.02;if(len>=0.14)pauses.push({t:Math.max(0,i*0.02-0.06),s:Math.min(1.6,len)});st=-1;}}
+ let last=n-1;while(last>0&&sm[last]<thr)last--;
+ const cs=new Float32Array(n);let acc=0;for(let i=0;i<n;i++){if(sm[i]>=thr)acc+=0.02;cs[i]=acc;}
+ const r={pauses,end:(last+1)*0.02,dur:n*0.02,cs};AN[src]=r;return r;}
+const nchars=s=>s.replace(/[ً-ْٰٕٓٔۡ]/g,'').replace(/\s+/g,'').length||1;
+// يوزّع الأسطر بين نقطتين ثابتتين على الوقفات الأقرب للتوقّع
+function alignSeg(lines,ta,tb,an){const pauses=an.pauses,cs=an.cs,n=cs.length;const S=x=>cs[Math.max(0,Math.min(n-1,Math.floor(x/0.02)))];
+ const inv=v=>{let lo=0,hi=n-1;while(lo<hi){const m=(lo+hi)>>1;if(cs[m]<v)lo=m+1;else hi=m;}return lo*0.02;};
+ const K=lines.length;if(K<=1)return [];const c=lines.map(l=>nchars(l[1])),tot=c.reduce((a,b)=>a+b,0),Sa=S(ta),Sb=S(tb),sp=Math.max(0.5,Sb-Sa);
+ const E=c.map(x=>x/tot*sp);const P=[];let acc=Sa;for(let k=1;k<K;k++){acc+=E[k-1];P.push(inv(acc));}
+ const span=tb-ta,W=Math.max(8,0.12*span);const inSeg=pauses.filter(p=>p.t>ta+0.25&&p.t<tb-0.25);
+ const opts=P.map(pk=>{let o=inSeg.filter(p=>Math.abs(p.t-pk)<=W);if(o.length>90)o=o.sort((a,b)=>b.s-a.s).slice(0,90);o=o.map(p=>({t:p.t,s:S(p.t),b:0.5*p.s}));o.push({t:pk,s:S(pk),b:-0.4});return o.sort((a,b)=>a.t-b.t);});
+ const cost=(d,e)=>{const r=(d-e)/(e+0.8);return r*r;};
+ let prev=[{t:ta,s:Sa,c:0,from:-1}];const back=[];
+ for(let k=0;k<K-1;k++){const cur=opts[k].map(o=>{let best=Infinity,bi=-1;prev.forEach((p,pi)=>{if(o.t<=p.t+0.25)return;const v=p.c+cost(o.s-p.s,E[k])-o.b;if(v<best){best=v;bi=pi;}});return {t:o.t,s:o.s,c:best,from:bi};}).filter(x=>isFinite(x.c));if(!cur.length)return P;back.push(cur);prev=cur;}
+ let bi=-1,best=Infinity;prev.forEach((p,i)=>{if(tb<=p.t+0.2)return;const v=p.c+cost(Sb-p.s,E[K-1]);if(v<best){best=v;bi=i;}});if(bi<0)return P;
+ const out=new Array(K-1);for(let k=K-2;k>=0;k--){const node=back[k][bi];out[k]=node.t;bi=node.from;}return out;}
+function autoFill(L,t,man,an){const idx=L.map((l,j)=>j).filter(j=>man.has(L[j][0])&&t[L[j][0]]!=null);if(!idx.length)return 0;let filled=0;
+ for(let a=0;a<idx.length;a++){const ja=idx[a],jb=a+1<idx.length?idx[a+1]:L.length;const ta=t[L[ja][0]],tb=jb<L.length?t[L[jb][0]]:an.end;if(!(tb>ta))continue;
+  const seg=L.slice(ja,jb);const b=alignSeg(seg,ta,tb,an);for(let k=1;k<seg.length;k++){t[seg[k][0]]=+b[k-1].toFixed(2);filled++;}}
+ for(let j=0;j<idx[0];j++)delete t[L[j][0]];return filled;}
+
 async function openSync(rec){let D;try{D=(await loadDT()).items[rec.item];}catch(e){alert(e.message);return;}if(!D){alert('ما لگيت نص هذا الدعاء');return;}
- const key='sync675-'+rec.id;let t={};try{t=JSON.parse(localStorage.getItem(key)||'null')||rec.timing||{};}catch(e){t=rec.timing||{};}
- if(rec.n&&rec.n!==D.n&&rec.timing){t={};}
- const L=D.lines;let ptr=0;while(ptr<L.length-1&&t[L[ptr][0]]!=null)ptr++;
+ const key='sync675-'+rec.id;let t={},man=new Set();try{const dr=JSON.parse(localStorage.getItem(key)||'null');if(dr&&dr.t){t=dr.t;man=new Set(dr.m||[]);}else if(dr){t=dr;}else{t=Object.assign({},rec.timing||{});}}catch(e){t=Object.assign({},rec.timing||{});}
+ if(rec.n&&rec.n!==D.n&&rec.timing&&!Object.keys(t).length){t={};}
+ const L=D.lines;if(!man.size&&t[L[0][0]]!=null)man.add(L[0][0]);
+ let ptr=0;while(ptr<L.length-1&&t[L[ptr][0]]!=null)ptr++;let src=rawBase()+rec.file;
  const ov=document.createElement('div');ov.id='sync675';ov.innerHTML=`<div class="sy-box"><div class="sy-top"><button type="button" data-x>✕</button><div><b></b><small></small></div></div>
- <audio preload="auto"></audio><p class="sy-err" hidden>ما گدرت أشغّل الصوت من المتجر. <label class="sy-file">📂 اختاره من جهازك<input type="file" accept="audio/*" hidden></label></p>
+ <audio preload="auto" crossorigin="anonymous"></audio><p class="sy-err" hidden>ما گدرت أشغّل الصوت من المتجر. <label class="sy-file">📂 اختاره من جهازك<input type="file" accept="audio/*" hidden></label></p>
+ <div class="sy-steps"><b>١</b> شغّل الصوت، ومن يبدي القارئ <u>أول سطر</u> اضغط الزر الأصفر. <b>٢</b> اضغط «⚡ زامن الباقي تلقائياً». <b>٣</b> اسمع شوية، وإذا سطر طلع غلط اضغطه بالقائمة وأشّره من جديد — الباقي يتعدّل وحده.</div>
  <div class="sy-ctl"><span class="sy-time">0:00</span><button type="button" data-play>▶ تشغيل</button><button type="button" data-back>⏪ ٣ ث</button><button type="button" data-spd>1×</button><button type="button" data-undo>↩ تراجع</button></div>
  <div class="sy-now"><small></small><p></p></div><button type="button" class="sy-mark" data-mark>👆 هسه بدأ هذا السطر</button>
- <p class="mut sy-help">شغّل الصوت، وكل ما القارئ يبدي سطر جديد اضغط الزر الكبير (أو زر المسافة بالكيبورد). تگدر تضغط أي سطر بالقائمة حتى ترجعله وتعدّله.</p>
+ <button type="button" class="sy-auto" data-auto>⚡ زامن الباقي تلقائياً</button><p class="sy-an mut"></p>
  <div class="sy-list"></div><div class="sy-foot"><span class="sy-cnt"></span><button type="button" class="pri" data-save>💾 احفظ المزامنة</button></div></div>`;
  document.body.appendChild(ov);document.body.style.overflow='hidden';
  ov.querySelector('.sy-top b').textContent=D.title;ov.querySelector('.sy-top small').textContent='بصوت '+rec.name;
- const A=ov.querySelector('audio');A.src=rawBase()+rec.file;let spd=1;
+ const A=ov.querySelector('audio');A.src=src;let spd=1,an=null,follow=-1;
  A.onerror=()=>{ov.querySelector('.sy-err').hidden=false;};
- ov.querySelector('.sy-file input').onchange=e=>{const f=e.target.files[0];if(f){A.src=URL.createObjectURL(f);ov.querySelector('.sy-err').hidden=true;}};
- const list=ov.querySelector('.sy-list');
+ ov.querySelector('.sy-file input').onchange=e=>{const f=e.target.files[0];if(f){src=URL.createObjectURL(f);A.src=src;an=null;ov.querySelector('.sy-err').hidden=true;}};
+ const list=ov.querySelector('.sy-list'),anP=ov.querySelector('.sy-an');
+ function draft(){try{localStorage.setItem(key,JSON.stringify({t:t,m:[...man]}));}catch(e){}}
  function paint(){const done=L.filter(l=>t[l[0]]!=null).length;ov.querySelector('.sy-cnt').textContent=done+' من '+L.length+' سطر';
-  ov.querySelector('.sy-now small').textContent='السطر '+(ptr+1)+' من '+L.length+(t[L[ptr][0]]!=null?' · مأشّر على '+fmt(t[L[ptr][0]]):'');ov.querySelector('.sy-now p').textContent=L[ptr][1];
-  list.innerHTML='';L.forEach((l,j)=>{const b=document.createElement('button');b.type='button';b.className='sy-row'+(j===ptr?' on':'')+(t[l[0]]!=null?' ok':'');b.innerHTML='<em></em><span></span>';b.querySelector('em').textContent=t[l[0]]!=null?fmt(t[l[0]]):'--';b.querySelector('span').textContent=l[1];
-   b.onclick=()=>{ptr=j;const prev=j>0?t[L[j-1][0]]:0;const at=t[l[0]]!=null?t[l[0]]:prev;if(at!=null&&isFinite(at))A.currentTime=Math.max(0,at-2);paint();};list.appendChild(b);});
-  const on=list.querySelector('.on');if(on)on.scrollIntoView({block:'nearest'});
-  try{localStorage.setItem(key,JSON.stringify(t));}catch(e){}}
- function mark(){if(A.paused&&!A.currentTime){A.play().catch(()=>{});return;}const tm=Math.max(0,+(A.currentTime-0.25*spd).toFixed(2));const prev=ptr>0?t[L[ptr-1][0]]:null;if(prev!=null&&tm<prev){alert('هذا الوقت قبل السطر اللي قبله — ارجع للسطر الصحيح');return;}t[L[ptr][0]]=tm;
-  for(let j=ptr+1;j<L.length;j++){if(t[L[j][0]]!=null&&t[L[j][0]]<tm)delete t[L[j][0]];}
-  if(ptr<L.length-1)ptr++;paint();}
+  ov.querySelector('.sy-now small').textContent='السطر '+(ptr+1)+' من '+L.length+(t[L[ptr][0]]!=null?' · '+(man.has(L[ptr][0])?'مأشّر':'تلقائي')+' على '+fmt(t[L[ptr][0]]):'');ov.querySelector('.sy-now p').textContent=L[ptr][1];
+  ov.querySelector('[data-auto]').disabled=t[L[0][0]]==null;
+  list.innerHTML='';L.forEach((l,j)=>{const b=document.createElement('button');b.type='button';b.className='sy-row'+(j===ptr?' on':'')+(t[l[0]]!=null?(man.has(l[0])?' ok':' au'):'')+(j===follow?' pl':'');b.innerHTML='<em></em><span></span>';b.querySelector('em').textContent=t[l[0]]!=null?fmt(t[l[0]]):'--';b.querySelector('span').textContent=l[1];
+   b.onclick=()=>{ptr=j;const prev=j>0?t[L[j-1][0]]:0;const at=t[l[0]]!=null?t[l[0]]:prev;if(at!=null&&isFinite(at))A.currentTime=Math.max(0,at-1.5);paint();};list.appendChild(b);});
+  const on=list.querySelector('.pl')||list.querySelector('.on');if(on)on.scrollIntoView({block:'nearest'});draft();}
+ async function runAuto(quiet){if(t[L[0][0]]==null){if(!quiet)alert('أشّر أول سطر أول');return false;}
+  try{if(!an)an=await analyzeAudio(src,m=>{anP.textContent=m;});}catch(e){anP.textContent='';alert('ما گدرت أحلل الصوت: '+e.message+'\nكمّل التأشير باليد.');return false;}
+  const n=autoFill(L,t,man,an);anP.textContent='✓ انزامنت '+n+' سطر تلقائياً — شغّل واسمع، وصحّح أي سطر غلط';paint();return true;}
+ function mark(){if(A.paused&&!A.currentTime){A.play().catch(()=>{});return;}const tm=Math.max(0,+(A.currentTime-0.25*spd).toFixed(2));
+  const prevM=L.slice(0,ptr).map(l=>l[0]).filter(i=>man.has(i)).pop();if(prevM!=null&&tm<t[prevM]){alert('هذا الوقت قبل سطر مأشّر قبله — ارجع للسطر الصحيح');return;}
+  t[L[ptr][0]]=tm;man.add(L[ptr][0]);
+  for(let j=ptr+1;j<L.length;j++){const i=L[j][0];if(man.has(i)&&t[i]<=tm){man.delete(i);delete t[i];}}
+  if(an){autoFill(L,t,man,an);}else{for(let j=ptr+1;j<L.length;j++){const i=L[j][0];if(!man.has(i)&&t[i]!=null&&t[i]<tm)delete t[i];}}
+  if(ptr<L.length-1&&!an)ptr++;paint();}
+ function close(){A.pause();ov.remove();document.body.style.overflow='';document.removeEventListener('keydown',kd);}
  ov.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;
-  if(b.hasAttribute('data-x')){if(Object.keys(t).length&&!confirm('تطلع؟ اللي أشّرته ينحفظ بجهازك وتگدر تكمل بعدين.'))return;A.pause();ov.remove();document.body.style.overflow='';document.removeEventListener('keydown',kd);return;}
+  if(b.hasAttribute('data-x')){if(Object.keys(t).length&&!confirm('تطلع؟ اللي سويته ينحفظ بجهازك وتگدر تكمل بعدين.'))return;close();return;}
   if(b.hasAttribute('data-play')){if(A.paused)A.play().catch(()=>{ov.querySelector('.sy-err').hidden=false;});else A.pause();return;}
   if(b.hasAttribute('data-back')){A.currentTime=Math.max(0,A.currentTime-3);return;}
   if(b.hasAttribute('data-spd')){spd=spd===1?1.25:spd===1.25?1.5:1;A.playbackRate=spd;b.textContent=spd+'×';return;}
-  if(b.hasAttribute('data-undo')){if(ptr>0&&t[L[ptr][0]]==null)ptr--;delete t[L[ptr][0]];if(isFinite(t[L[Math.max(0,ptr-1)][0]]))A.currentTime=Math.max(0,t[L[Math.max(0,ptr-1)][0]]);paint();return;}
+  if(b.hasAttribute('data-undo')){const i=L[ptr][0];if(man.has(i)&&ptr>0){man.delete(i);delete t[i];if(an)autoFill(L,t,man,an);}else if(ptr>0){ptr--;man.delete(L[ptr][0]);delete t[L[ptr][0]];}else{man.clear();t={};}paint();return;}
   if(b.hasAttribute('data-mark')){mark();return;}
-  if(b.hasAttribute('data-save')){const miss=L.filter(l=>t[l[0]]==null).length;if(miss){alert('باقي '+miss+' سطر ما مأشّر. كمّلهن قبل الحفظ (اللي سويته محفوظ بجهازك).');return;}
+  if(b.hasAttribute('data-auto')){b.disabled=true;await runAuto(false);b.disabled=false;return;}
+  if(b.hasAttribute('data-save')){let miss=L.filter(l=>t[l[0]]==null).length;
+   if(miss&&t[L[0][0]]!=null){b.disabled=true;b.textContent='⏳ جاري المزامنة التلقائية…';await runAuto(true);miss=L.filter(l=>t[l[0]]==null).length;b.disabled=false;b.textContent='💾 احفظ المزامنة';}
+   if(miss){alert(t[L[0][0]]==null?'أشّر أول سطر أول (شغّل الصوت واضغط الزر الأصفر من يبدي القارئ)':'باقي '+miss+' سطر ما مزامن.');return;}
    b.disabled=true;b.textContent='⏳ جاري الحفظ…';try{const T={};L.forEach(l=>{T[l[0]]=t[l[0]];});
     for(let k=0;k<3;k++){let r=vcat.recordings.find(x=>x.id===rec.id);if(!r)throw new Error('التسجيل انحذف');r.timing=T;r.n=D.n;await saveV('مزامنة '+D.title+' — '+rec.name);r=vcat.recordings.find(x=>x.id===rec.id);if(r&&r.timing&&Object.keys(r.timing).length===L.length)break;}
-    localStorage.removeItem(key);A.pause();ov.remove();document.body.style.overflow='';document.removeEventListener('keydown',kd);renderV();vlog('✓ انحفظت مزامنة «'+D.title+'» بصوت '+rec.name+' — تشتغل بالتطبيق خلال دقائق','ok');}
+    localStorage.removeItem(key);close();renderV();vlog('✓ انحفظت مزامنة «'+D.title+'» بصوت '+rec.name+' — تشتغل بالتطبيق خلال دقائق','ok');}
    catch(err){alert('ما انحفظت: '+err.message);b.disabled=false;b.textContent='💾 احفظ المزامنة';}return;}});
- A.ontimeupdate=()=>{ov.querySelector('.sy-time').textContent=fmt(A.currentTime)+(isFinite(A.duration)?' / '+fmt(A.duration):'');};
+ A.ontimeupdate=()=>{ov.querySelector('.sy-time').textContent=fmt(A.currentTime)+(isFinite(A.duration)?' / '+fmt(A.duration):'');
+  let f=-1;L.forEach((l,j)=>{if(t[l[0]]!=null&&t[l[0]]<=A.currentTime+0.05)f=j;});if(f!==follow){follow=f;list.querySelectorAll('.sy-row').forEach((r,j)=>r.classList.toggle('pl',j===f));const r=list.children[f];if(r&&!A.paused)r.scrollIntoView({block:'nearest'});}};
  A.onplay=A.onpause=()=>{ov.querySelector('[data-play]').textContent=A.paused?'▶ تشغيل':'⏸ إيقاف';};
  function kd(e){if(e.target.closest&&e.target.closest('input,textarea,select'))return;if(e.code==='Space'){e.preventDefault();mark();}else if(e.key==='Backspace'){e.preventDefault();ov.querySelector('[data-undo]').click();}}
  document.addEventListener('keydown',kd);paint();}
