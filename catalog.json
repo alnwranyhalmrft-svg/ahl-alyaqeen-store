@@ -2,6 +2,14 @@
  "version": 1,
  "images": [
   {
+   "id": "1-mwyn7jzp45r",
+   "title": "سماوي",
+   "sub": "",
+   "category": "sec-mwyn6iou",
+   "file": "images/1-mwyn7jzp45r.webp",
+   "added": "2026-11-27"
+  },
+  {
    "id": "15-mwyn6e5tvrj",
    "title": "خلفية جديدة",
    "sub": "",
@@ -190,6 +198,10 @@
   {
    "id": "sec-mwyn6iou",
    "name": "سماوي"
+  },
+  {
+   "id": "sec-mwyn7zb4",
+   "name": "ال النبي(ص)"
   }
  ]
 }
