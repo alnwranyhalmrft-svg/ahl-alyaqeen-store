@@ -2,6 +2,54 @@
  "version": 1,
  "images": [
   {
+   "id": "06-mwymj1rdqs3",
+   "title": "06-احتفال-العراق",
+   "sub": "",
+   "category": "cinema",
+   "file": "images/06-mwymj1rdqs3.webp",
+   "added": "2026-11-27"
+  },
+  {
+   "id": "05-mwymj1rdzve",
+   "title": "05-الجندي-والعراق",
+   "sub": "",
+   "category": "cinema",
+   "file": "images/05-mwymj1rdzve.webp",
+   "added": "2026-11-27"
+  },
+  {
+   "id": "04-mwymj1rdtlc",
+   "title": "العراق ",
+   "sub": "",
+   "category": "cinema",
+   "file": "images/04-mwymj1rdtlc.webp",
+   "added": "2026-11-27"
+  },
+  {
+   "id": "03-mwymj1rdbk9",
+   "title": "العراق ",
+   "sub": "",
+   "category": "cinema",
+   "file": "images/03-mwymj1rdbk9.webp",
+   "added": "2026-11-27"
+  },
+  {
+   "id": "02-mwymj1rdcwp",
+   "title": "العراق ",
+   "sub": "العراق ",
+   "category": "cinema",
+   "file": "images/02-mwymj1rdcwp.webp",
+   "added": "2026-11-27"
+  },
+  {
+   "id": "01-mwymj1rbra7",
+   "title": "العراق ",
+   "sub": "",
+   "category": "cinema",
+   "file": "images/01-mwymj1rbra7.webp",
+   "added": "2026-11-27"
+  },
+  {
    "id": "img-7912-mwxhvwttocd",
    "title": "خلفية جديدة",
    "sub": "",
