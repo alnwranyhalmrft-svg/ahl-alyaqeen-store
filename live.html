@@ -15,15 +15,20 @@ p{position:fixed;inset:0;display:grid;place-items:center;margin:0;opacity:.7}
 <p id="m">جاري تشغيل البث…</p>
 <script>
 (function(){
-  var ch=new URLSearchParams(location.search).get('ch')||'';
-  if(!/^UC[\w-]{22}$/.test(ch)){document.getElementById('m').textContent='القناة غير صحيحة';return;}
+  var q=new URLSearchParams(location.search),ch=q.get('ch')||'',v=q.get('v')||'',src='';
+  var extra=(q.get('mute')==='1'?'&mute=1':'')+(q.get('enablejsapi')==='1'?'&enablejsapi=1':'');
+  if(/^[\w-]{11}$/.test(v))src='https://www.youtube.com/embed/'+v+'?autoplay=1&playsinline=1&rel=0&modestbranding=1'+extra;
+  else if(/^UC[\w-]{22}$/.test(ch))src='https://www.youtube.com/embed/live_stream?channel='+ch+'&autoplay=1&playsinline=1&rel=0&modestbranding=1';
+  if(!src){document.getElementById('m').textContent='الرابط غير صحيح';return;}
   var f=document.createElement('iframe');
-  f.src='https://www.youtube.com/embed/live_stream?channel='+ch+'&autoplay=1&playsinline=1&rel=0&modestbranding=1';
+  f.src=src;
   f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
   f.allowFullscreen=true;
   f.referrerPolicy='strict-origin-when-cross-origin';
   f.title='البث المباشر';
   document.body.appendChild(f);
+  // يوصّل أوامر الصوت (كتم / تشغيل) من التطبيق إلى مشغّل يوتيوب
+  window.addEventListener('message',function(e){if(e.source===f.contentWindow)return;try{f.contentWindow.postMessage(e.data,'https://www.youtube.com');}catch(_){}});
 })();
 </script>
 </body>

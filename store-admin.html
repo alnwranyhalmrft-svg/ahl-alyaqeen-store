@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>لوحة متجر الصور — أهل اليقين</title>
+<title>لوحة متجر أهل اليقين — صور وأصوات</title>
 <style>
 :root{--bg:#0c1222;--card:#141d33;--line:#26324f;--ink:#eef2fa;--mut:#9aa7c2;--acc:#e9b955;--ok:#3fbf7f;--no:#e0645a}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#1d2a4d,transparent),var(--bg);color:var(--ink);font:15px/1.6 "IBM Plex Sans Arabic",Tajawal,system-ui,sans-serif}
@@ -26,8 +26,8 @@ code{background:#0e1629;border:1px solid var(--line);border-radius:8px;padding:2
 </head>
 <body>
 <main>
-<h1>لوحة متجر الصور</h1>
-<p class="mut">من هنا تضيف صور جديدة لمتجر «أهل اليقين». الصورة تطلع عند كل الناس بالتطبيق خلال دقائق، وبدون تحديث التطبيق.</p>
+<h1>لوحة متجر أهل اليقين</h1>
+<p class="mut">من هنا تضيف <b>صور</b> و<b>أصوات</b> (أذان، أدعية، زيارات) لتطبيق «أهل اليقين». تطلع عند كل الناس خلال دقائق، وبدون تحديث التطبيق.</p>
 
 <section class="card" id="setup">
 <h2>الربط</h2>
@@ -54,6 +54,65 @@ code{background:#0e1629;border:1px solid var(--line);border-radius:8px;padding:2
 <div id="log"></div>
 </section>
 
+
+<section class="card" id="vadd" hidden>
+<h2>🎙 أضف أصوات</h2>
+<p class="mut" style="margin:0 0 8px">نوع الصوت:</p>
+<div class="seg" id="vSeg"><button type="button" data-t="dua" aria-pressed="true">دعاء أو زيارة</button><button type="button" data-t="shia">أذان شيعي</button><button type="button" data-t="sunni">أذان سنّي</button></div>
+<div class="drop" id="vdrop" style="margin-top:12px"><b style="font-size:20px;color:var(--ink)">＋ اختار ملفات صوت</b><br>MP3 من تلفونك — البرنامج يعرف اسم الدعاء والقارئ من اسم الملف<input id="vfiles" type="file" accept="audio/*,.mp3,.m4a,.aac,.wav" multiple hidden></div>
+<div class="items" id="vqueue" style="margin-top:12px" hidden></div>
+<p style="margin:10px 0 0" id="vgoRow" hidden><button class="pri" id="vgo">⬆ ارفع الكل</button></p>
+<div id="vlog"></div>
+</section>
+<section class="card" id="vlist" hidden>
+<h2>الأصوات الموجودة <small id="vcnt"></small></h2>
+<div id="vgrid" style="display:grid;gap:8px"></div>
+</section>
+
+
+<section class="card" id="updset" hidden>
+<h2>📢 رسالة «حدّث التطبيق»</h2>
+<p class="mut">بعد ما ينزل التحديث بالمتجر، اكتب رقم النسخة الجديدة هنا. أي واحد عنده نسخة أقدم تطلعله رسالة «حدّث» من يفتح التطبيق، ومن يحدّث تختفي وحدها. (الآيفون يعرف وحده من الـ App Store حتى لو ما كتبت شي.)</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label>نسخة الآيفون</label><input id="upIos" placeholder="مثلاً 6.73" style="direction:ltr"></div><div><label>نسخة الأندرويد</label><input id="upAnd" placeholder="مثلاً 6.73" style="direction:ltr"></div></div>
+<label style="margin-top:8px">شنو الجديد؟ (اختياري — يطلع بالرسالة)</label>
+<textarea id="upMsg" style="width:100%;height:90px;background:#0f1730;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit" placeholder="• صوت الإشعارات صار أوضح&#10;• شهر رمضان والإمساكية"></textarea>
+<label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="upForce" style="width:auto"> تحديث إجباري (بدون زر «لاحقاً»)</label>
+<p style="margin:10px 0 0"><button class="pri" id="upSave">حفظ</button> <span id="upMsgSt" class="mut"></span></p>
+</section>
+<section class="card" id="fbset" hidden>
+<h2>👥 الختمة الجماعية</h2>
+<p class="mut" id="fbState">—</p>
+<details><summary style="cursor:pointer;font-weight:700">ربط Firebase (مرة وحدة)</summary>
+<ol class="mut" style="line-height:2">
+<li>افتح <b>console.firebase.google.com</b> وسوّي مشروع جديد (مجاني).</li>
+<li>من القائمة: Build ← <b>Firestore Database</b> ← Create database.</li>
+<li>بتبويب <b>Rules</b> امسح الموجود والصق القواعد اللي تحت، واضغط Publish.</li>
+<li>من ⚙️ Project settings ← بالأسفل اضغط أيقونة الويب <b>&lt;/&gt;</b> وسجّل تطبيق، وانسخ كود <b>firebaseConfig</b> كله والصقه هنا.</li>
+</ol>
+<label>القواعد (Rules)</label>
+<textarea id="fbRules" readonly style="width:100%;height:150px;direction:ltr;text-align:left;font-family:monospace;font-size:12px;background:#0f1730;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px">rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    match /khatmas/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['type','for','dead','niyya','created','count','parts','title','target'])
+        && request.resource.data.for is string && request.resource.data.for.size() <= 60
+        && request.resource.data.count == 0;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['parts','count'])
+        && request.resource.data.count >= resource.data.count
+        && request.resource.data.count <= resource.data.count + 100000;
+      allow delete: if false;
+    }
+  }
+}</textarea>
+<button type="button" id="fbCopy" style="margin:6px 0 12px">📋 انسخ القواعد</button>
+<label>الصق firebaseConfig هنا</label>
+<textarea id="fbCfg" style="width:100%;height:120px;direction:ltr;text-align:left;font-family:monospace;font-size:12px;background:#0f1730;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px" placeholder="const firebaseConfig = { apiKey: &quot;...&quot;, projectId: &quot;...&quot; ... };"></textarea>
+<label style="margin-top:10px">رابط التطبيق بالمتجر (اختياري — يطلع بصفحة الختمة)</label>
+<input id="fbApp" placeholder="https://apps.apple.com/... أو https://play.google.com/..." style="direction:ltr">
+<p style="margin:10px 0 0"><button class="pri" id="fbSave">حفظ وتفعيل</button> <span id="fbMsg" class="mut"></span></p>
+</details>
+</section>
 <section class="card" id="list" hidden>
 <h2>الصور الموجودة بالمتجر <small id="cnt"></small></h2>
 <div class="grid" id="grid"></div>
@@ -76,6 +135,60 @@ async function saveCat(msg){for(let i=0;i<2;i++){const r=await api('catalog.json
 function render(){$('cnt').textContent='('+cat.images.length+')';$('grid').innerHTML='';cat.images.forEach(im=>{const d=document.createElement('div');d.className='cell';d.innerHTML='<img loading="lazy" alt=""><div></div><button type="button">حذف</button>';d.querySelector('img').src=rawBase()+im.file;d.querySelector('div').textContent=im.title;d.querySelector('button').onclick=()=>del(im,d);$('grid').appendChild(d);});}
 async function del(im,el){if(!confirm('تحذف «'+im.title+'» من المتجر؟'))return;try{cat.images=cat.images.filter(x=>x.id!==im.id);await saveCat('حذف '+im.id);const g=await api(im.file);if(g.ok){const j=await g.json();await api(im.file,{method:'DELETE',body:JSON.stringify({message:'حذف '+im.file,sha:j.sha,branch:cfg.branch})});}el.remove();$('cnt').textContent='('+cat.images.length+')';}catch(e){alert('ما گدرت أحذف: '+e.message);}}
 $('connect').onclick=async()=>{save();if(!cfg.owner||!cfg.repo||!cfg.token){$('cstat').textContent='اكتب الحساب والمستودع والمفتاح';return;}$('cstat').textContent='جاري الربط…';try{await loadCat();$('cstat').innerHTML='<span class="ok">✓ مربوط</span>';$('setup').classList.add('done');$('add').hidden=false;$('list').hidden=false;$('appurl').hidden=false;$('appurlv').textContent=rawBase()+'catalog.json';render();}catch(e){$('cstat').innerHTML='<span class="no">✗ ما انربط: '+e.message+' — تأكد من الاسم والمفتاح</span>';}};
+
+// ================== الأصوات ==================
+const ITEMS=[["ahd", "دعاء العهد"], ["tawassul", "دعاء التوسل"], ["sabah", "دعاء الصباح"], ["jawshan_kabir", "دعاء الجوشن الكبير"], ["jawshan_saghir", "دعاء الجوشن الصغير"], ["abu_hamza", "دعاء أبي حمزة الثمالي"], ["nudba", "دعاء الندبة"], ["mujir", "دعاء المجير"], ["makarim", "دعاء مكارم الأخلاق"], ["simat", "دعاء السمات"], ["umm_dawud", "دعاء أم داود"], ["arafa", "دعاء عرفة"], ["ruqa", "رقعة الحاجة"], ["kumayl", "دعاء كميل"], ["iftitah", "دعاء الافتتاح"], ["ashura", "زيارة عاشوراء"], ["warith", "زيارة وارث"], ["aminallah", "زيارة أمين الله"], ["jamia", "الزيارة الجامعة الكبيرة"], ["abbas", "زيارة أبي الفضل العباس"], ["alyasin", "زيارة آل ياسين"], ["faraj", "دعاء الفرج"]];
+const KW=[['nudba',/ندب/],['kumayl',/كميل|کمیل|kumayl|komeil|kumail/i],['tawassul',/توسل|tawas/i],['iftitah',/افتتاح|iftitah/i],['ahd',/عهد|ahd/i],['sabah',/صباح|sabah/i],['jawshan_kabir',/جوشن.?كبير|جوشن.?کبیر|jawshan/i],['jawshan_saghir',/جوشن.?صغير|جوشن.?صغیر/],['abu_hamza',/حمز|ثمال/],['mujir',/مجير|مجیر|mujir/i],['makarim',/مكارم|مکارم/],['simat',/سمات|simat/i],['umm_dawud',/داود/],['arafa',/عرف|arafa/i],['faraj',/فرج|faraj/i],['ashura',/عاشور|ashura/i],['warith',/وارث|warith/i],['aminallah',/امين.?الله|امین.?الله|أمين.?الله/],['jamia',/جامع|jamia/i],['alyasin',/ياسين|یاسین|yasin/i],['abbas',/عباس|abbas/i]];
+const RC=[[/سماوات|samavat/i,'الحاج مهدي سماواتي'],[/فرهمند|farahmand/i,'محسن فرهمند'],[/مطيعي|مطیعی|motiee/i,'ميثم مطيعي'],[/كربلائي|کربلایی|karbalai/i,'باسم الكربلائي'],[/حلواجي|halwachi/i,'أباذر الحلواجي'],[/مؤذن.?زاده|موذن.?زاده|moazzen/i,'رحيم مؤذن زاده أردبيلي'],[/انصاري|انصاریان|ansarian/i,'حسين أنصاريان'],[/ميرداماد|میرداماد|mirdamad/i,'مهدي ميرداماد'],[/منصوري|منصوری|mansouri/i,'مهدي منصوري'],[/حداديان|حدادیان|hadadian/i,'سعيد حداديان'],[/آهنگران|ahangaran/i,'صادق آهنگران'],[/فتلاوي|fatlawi/i,'أحمد الفتلاوي'],[/عنوز|anooz/i,'محمد عنوز'],[/الكعبي|kaabi/i,'علي الكعبي'],[/عفاسي|afasy/i,'مشاري العفاسي'],[/ملا|mulla/i,'علي ملا']];
+let vtype='dua',vcat={version:1,adhan:[],recordings:[]},vSha=null,vq=[];
+function guessItem(n){for(const [id,re] of KW)if(re.test(n))return id;return '';}
+function guessName(n){for(const [re,nm] of RC)if(re.test(n))return nm;let x=n.replace(/\.[a-z0-9]+$/i,'').replace(/[_\-.]+/g,' ').replace(/دعا[ءی]?|دعاي|زيارة|زیارت|اذان|أذان|azan|adhan|با صدای|بصوت|صوت|mp3|\d+/gi,' ');KW.forEach(([,re])=>{x=x.replace(new RegExp(re.source,'gi'),' ');});x=x.replace(/\s+/g,' ').trim();return x.length>=3?x:'';}
+async function loadV(){const r=await api('voices.json');if(r.status===404){vcat={version:1,adhan:[],recordings:[]};vSha=null;return;}if(!r.ok)throw new Error('GitHub '+r.status);const j=await r.json();vSha=j.sha;vcat=JSON.parse(ub64(j.content));vcat.adhan=vcat.adhan||[];vcat.recordings=vcat.recordings||[];}
+async function saveV(msg){for(let i=0;i<3;i++){const r=await api('voices.json',{method:'PUT',body:JSON.stringify({message:msg,content:b64u(JSON.stringify(vcat,null,1)),sha:vSha||undefined,branch:cfg.branch})});if(r.ok){vSha=(await r.json()).content.sha;return;}if(r.status===409||r.status===422){const a=vcat.adhan,b=vcat.recordings;await loadV();const ia=new Set(vcat.adhan.map(x=>x.id)),ib=new Set(vcat.recordings.map(x=>x.id));a.forEach(x=>{if(!ia.has(x.id))vcat.adhan.push(x);});b.forEach(x=>{if(!ib.has(x.id))vcat.recordings.push(x);});continue;}throw new Error('حفظ قائمة الأصوات '+r.status);}}
+function itemName(id){const x=ITEMS.find(i=>i[0]===id);return x?x[1]:id;}
+function renderV(){const all=vcat.adhan.map(a=>({k:'adhan',x:a,t:(a.madhab==='sunni'?'أذان سنّي':'أذان شيعي')})).concat(vcat.recordings.map(r=>({k:'rec',x:r,t:itemName(r.item)})));$('vcnt').textContent='('+all.length+')';$('vgrid').innerHTML='';
+ all.forEach(o=>{const d=document.createElement('div');d.style.cssText='display:flex;gap:10px;align-items:center;background:#0f1730;border:1px solid var(--line);border-radius:12px;padding:8px 10px';d.innerHTML='<span style="flex:1"><b></b><br><small></small></span><audio controls preload="none" style="width:150px;height:34px"></audio><button type="button" style="background:#3a1f25;color:#ffb3ab;padding:8px 10px">حذف</button>';d.querySelector('b').textContent=o.x.name;d.querySelector('small').textContent=o.t;d.querySelector('audio').src=rawBase()+o.x.file;d.querySelector('button').onclick=()=>delV(o,d);$('vgrid').appendChild(d);});}
+async function delV(o,el){if(!confirm('تحذف «'+o.x.name+'»؟'))return;try{if(o.k==='adhan')vcat.adhan=vcat.adhan.filter(x=>x.id!==o.x.id);else vcat.recordings=vcat.recordings.filter(x=>x.id!==o.x.id);await saveV('حذف '+o.x.id);const g=await api(o.x.file);if(g.ok){const j=await g.json();await api(o.x.file,{method:'DELETE',body:JSON.stringify({message:'حذف '+o.x.file,sha:j.sha,branch:cfg.branch})});}el.remove();renderV();}catch(e){alert('ما گدرت أحذف: '+e.message);}}
+$('vSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;vtype=b.dataset.t;$('vSeg').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));vq.forEach(q=>{if(q.state==='wait'){q.type=vtype;paintQ(q);}});};
+const vdrop=$('vdrop');vdrop.onclick=()=>$('vfiles').click();$('vfiles').onchange=e=>{addV(e.target.files);e.target.value='';};
+vdrop.ondragover=e=>{e.preventDefault();vdrop.classList.add('on');};vdrop.ondragleave=()=>vdrop.classList.remove('on');vdrop.ondrop=e=>{e.preventDefault();vdrop.classList.remove('on');addV(e.dataTransfer.files);};
+function paintQ(q){const d=q.el;const isAd=q.type!=='dua';d.innerHTML='<div style="font-size:30px;text-align:center">'+(isAd?'📢':'📿')+'</div><div><label>اسم القارئ / المؤذن</label><input class="vn"><div class="vi"'+(isAd?' hidden':'')+'><label>الدعاء أو الزيارة</label><select class="vs"><option value="">— اختار —</option>'+ITEMS.map(i=>'<option value="'+i[0]+'">'+i[1]+'</option>').join('')+'</select></div><small class="vst"></small></div>';
+ d.querySelector('.vn').value=q.name;d.querySelector('.vn').oninput=e=>{q.name=e.target.value.trim();};const sel=d.querySelector('.vs');sel.value=q.item;sel.onchange=e=>{q.item=e.target.value;};d.querySelector('.vst').textContent=q.file.name+' · '+(q.file.size/1048576).toFixed(1)+' MB'+(isAd?' · '+(q.type==='sunni'?'أذان سنّي':'أذان شيعي'):'');}
+function addV(files){[...files].forEach(f=>{const n=f.name;let t=vtype;if(/اذان|أذان|azan|adhan|athan/i.test(n)&&t==='dua')t='shia';const q={file:f,type:t,name:guessName(n),item:guessItem(n),state:'wait',el:document.createElement('div')};q.el.className='item';q.el.style.gridTemplateColumns='48px 1fr';vq.push(q);$('vqueue').appendChild(q.el);paintQ(q);});$('vqueue').hidden=false;$('vgoRow').hidden=false;
+ if(vq.filter(q=>q.state==='wait').every(q=>q.name&&(q.type!=='dua'||q.item)))setTimeout(()=>$('vgo').click(),600);}
+function fileB64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=()=>rej(r.error);r.readAsDataURL(f);});}
+function vslug(s){return (s||'v').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,24)||'v';}
+$('vgo').onclick=async()=>{const todo=vq.filter(q=>q.state==='wait');for(const q of todo){if(!q.name||(q.type!=='dua'&&false)||(q.type==='dua'&&!q.item)){q.el.querySelector('.vst').innerHTML='<span class="no">اكتب اسم القارئ'+(q.type==='dua'?' واختار الدعاء':'')+'</span>';continue;}
+ if(q.file.size>95*1048576){q.el.querySelector('.vst').innerHTML='<span class="no">الملف أكبر من 95MB — صغّره</span>';continue;}
+ q.state='up';$('vgo').disabled=true;const st=q.el.querySelector('.vst');st.textContent='⏳ جاري الرفع…';
+ try{const ext=(q.file.name.match(/\.([a-z0-9]+)$/i)||[,'mp3'])[1].toLowerCase();const id=(q.type==='dua'?q.item:q.type)+'-'+vslug(q.file.name.replace(/\.[^.]+$/,''))+'-'+Date.now().toString(36);const path='voices/'+id+'.'+ext;
+  const r=await api(path,{method:'PUT',body:JSON.stringify({message:'صوت '+q.name,content:await fileB64(q.file),branch:cfg.branch})});if(!r.ok)throw new Error('رفع '+r.status);
+  if(q.type==='dua')vcat.recordings.push({id:id,item:q.item,name:q.name,file:path});else vcat.adhan.push({id:'st-'+id,name:q.name,madhab:q.type==='sunni'?'sunni':'shia',file:path});
+  await saveV('إضافة '+q.name);q.state='done';st.innerHTML='<span class="ok">✓ انرفع — يطلع بالتطبيق خلال دقائق</span>';renderV();}
+ catch(e){q.state='wait';st.innerHTML='<span class="no">✗ '+e.message+'</span>';}}
+ $('vgo').disabled=false;};
+const conn0=$('connect').onclick;$('connect').onclick=async()=>{await conn0();if(!$('setup').classList.contains('done'))return;try{await loadV();$('vadd').hidden=false;$('vlist').hidden=false;renderV();}catch(e){$('vlog').innerHTML='<span class="no">ما گدرت أفتح الأصوات: '+e.message+'</span>';}};
+
+// ================== الختمة الجماعية: ربط Firebase ==================
+let cfgSha=null,cfgObj={};
+async function loadCfg(){const r=await api('config.json');if(r.status===404){cfgObj={};cfgSha=null;return;}if(!r.ok)throw new Error('GitHub '+r.status);const j=await r.json();cfgSha=j.sha;cfgObj=JSON.parse(ub64(j.content));}
+function paintCfg(){const ok=cfgObj.firebase&&cfgObj.firebase.apiKey;$('fbState').innerHTML=ok?'<span class="ok">✓ مفعّلة — مشروع '+cfgObj.firebase.projectId+'</span>':'<span class="no">مو مفعّلة بعد — اتبع الخطوات تحت</span>';if(cfgObj.appUrl)$('fbApp').value=cfgObj.appUrl;}
+$('fbCopy').onclick=()=>{const t=$('fbRules');t.select();try{navigator.clipboard.writeText(t.value);}catch(e){document.execCommand('copy');}$('fbCopy').textContent='✓ انسخت';};
+$('fbSave').onclick=async()=>{const t=$('fbCfg').value;const k=(t.match(/apiKey\s*:\s*["']([^"']+)["']/)||[])[1],p=(t.match(/projectId\s*:\s*["']([^"']+)["']/)||[])[1];
+ if(!t.trim()&&cfgObj.firebase){}else if(!k||!p){$('fbMsg').innerHTML='<span class="no">ما لگيت apiKey و projectId — الصق الكود كامل</span>';return;}
+ if(k&&p)cfgObj.firebase={apiKey:k,projectId:p};const app=$('fbApp').value.trim();if(app)cfgObj.appUrl=app;else delete cfgObj.appUrl;
+ $('fbSave').disabled=true;$('fbMsg').textContent='⏳ …';
+ try{const r=await api('config.json',{method:'PUT',body:JSON.stringify({message:'إعدادات الختمة الجماعية',content:b64u(JSON.stringify(cfgObj,null,1)),sha:cfgSha||undefined,branch:cfg.branch})});if(!r.ok)throw new Error('GitHub '+r.status);cfgSha=(await r.json()).content.sha;$('fbMsg').innerHTML='<span class="ok">✓ انحفظ — الختمة الجماعية تشتغل بالتطبيق خلال دقائق</span>';paintCfg();}
+ catch(e){$('fbMsg').innerHTML='<span class="no">✗ '+e.message+'</span>';}$('fbSave').disabled=false;};
+const conn1=$('connect').onclick;$('connect').onclick=async()=>{await conn1();if(!$('setup').classList.contains('done'))return;try{await loadCfg();$('fbset').hidden=false;paintCfg();}catch(e){}};
+
+// ================== رسالة التحديث ==================
+function paintUpd(){const U=cfgObj.update||{};$('upIos').value=U.ios||'';$('upAnd').value=U.android||'';$('upMsg').value=U.msg||'';$('upForce').checked=!!U.force;}
+$('upSave').onclick=async()=>{const U={ios:$('upIos').value.trim(),android:$('upAnd').value.trim(),msg:$('upMsg').value.trim(),force:$('upForce').checked};if([U.ios,U.android].some(v=>v&&!/^\d+(\.\d+)*$/.test(v))){$('upMsgSt').innerHTML='<span class="no">رقم النسخة لازم يكون مثل 6.73</span>';return;}
+ $('upSave').disabled=true;$('upMsgSt').textContent='⏳ …';
+ try{await loadCfg();cfgObj.update=U;const r=await api('config.json',{method:'PUT',body:JSON.stringify({message:'رسالة التحديث '+(U.ios||U.android),content:b64u(JSON.stringify(cfgObj,null,1)),sha:cfgSha||undefined,branch:cfg.branch})});if(!r.ok)throw new Error('GitHub '+r.status);cfgSha=(await r.json()).content.sha;$('upMsgSt').innerHTML='<span class="ok">✓ انحفظ — تطلع الرسالة للي ما حدّث خلال دقائق</span>';}
+ catch(e){$('upMsgSt').innerHTML='<span class="no">✗ '+e.message+'</span>';}$('upSave').disabled=false;};
+const conn2=$('connect').onclick;$('connect').onclick=async()=>{await conn2();if(!$('setup').classList.contains('done'))return;try{if(!cfgSha&&!cfgObj.firebase)await loadCfg();$('updset').hidden=false;paintUpd();}catch(e){}};
 if(localStorage.getItem('store657-token')&&localStorage.getItem('store657-owner'))setTimeout(()=>$('connect').click(),50);
 $('copyurl').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText($('appurlv').textContent);$('copyurl').textContent='انسخ ✓';};
 const drop=$('drop');drop.onclick=()=>$('files').click();$('files').onchange=e=>addFiles(e.target.files);

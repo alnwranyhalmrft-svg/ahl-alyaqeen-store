@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ختمة جماعية — أهل اليقين</title>
+<meta property="og:title" content="ختمة جماعية — أهل اليقين">
+<meta property="og:description" content="احجز جزءاً من الختمة أو شارك بالذكر">
+<style>
+:root{--g:#1f7a5c;--g2:#25a36f;--ink:#14201b;--bg:#f4f6f2;--card:#fff;--line:rgba(0,0,0,.1)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+main{max-width:560px;margin:0 auto;padding:16px 14px 40px}
+.hero{padding:20px 18px;border-radius:24px;color:#fff;background:radial-gradient(120% 90% at 50% 0,#2a8a66,#0a2a20);text-align:center}
+.hero small{opacity:.85;font-weight:700}.hero h1{margin:6px 0 4px;font-size:1.5rem;line-height:1.5}.hero p{margin:0;opacity:.9}
+.bar{height:12px;border-radius:99px;background:rgba(0,0,0,.08);overflow:hidden;margin:16px 0 4px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--g2),var(--g))}
+.mut{opacity:.7;font-size:.9rem;text-align:center;margin:4px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.j{padding:8px 2px;border-radius:12px;border:1px solid var(--line);background:var(--card);font:inherit;color:inherit;min-height:64px;cursor:pointer}
+.j b{display:block;font-size:1.1rem}.j small{display:block;font-size:.65rem;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.j.res{background:#fbf1d9;border-color:#e2b04a}.j.mine{background:#e9e6ff;border-color:#5b4cf0}.j.done{background:var(--g);color:#fff;border-color:var(--g)}
+.tap{display:block;width:100%;aspect-ratio:2/1;border:0;border-radius:28px;font:inherit;font-size:1.5rem;font-weight:800;color:#fff;background:radial-gradient(circle at 50% 30%,#2fbf85,#14593f);box-shadow:0 14px 30px rgba(20,89,63,.35);cursor:pointer}
+.tap small{display:block;font-size:.95rem;font-weight:500;opacity:.9;margin-top:4px}.cnt{text-align:center;font-size:1.1rem}.cnt b{font-size:2.2rem}
+.plus{display:flex;gap:8px;margin:10px 0}.plus button{flex:1;padding:11px;border-radius:14px;border:1px solid var(--line);background:var(--card);font:inherit;font-weight:700;cursor:pointer}
+.btn{display:block;width:100%;margin-top:12px;padding:15px;border-radius:16px;border:0;font:inherit;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--g2),var(--g));text-align:center;text-decoration:none;cursor:pointer}
+.btn.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.app{margin-top:22px;padding:16px;border-radius:20px;background:var(--card);border:1px solid var(--line);text-align:center}
+.app b{display:block;font-size:1.05rem;margin-bottom:4px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 18px;border-radius:99px;opacity:0;transition:.25s;pointer-events:none}#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<main id="m"><p class="mut">⏳ جاري التحميل…</p></main>
+<div id="toast"></div>
+<script>
+(function(){
+var STORE='https://raw.githubusercontent.com/alnwranyhalmrft-svg/ahl-alyaqeen-store/main/';
+var JUZ=[[1,1,'الفاتحة'],[2,142,'البقرة'],[2,253,'البقرة'],[3,93,'آل عمران'],[4,24,'النساء'],[4,148,'النساء'],[5,82,'المائدة'],[6,111,'الأنعام'],[7,88,'الأعراف'],[8,41,'الأنفال'],[9,93,'التوبة'],[11,6,'هود'],[12,53,'يوسف'],[15,1,'الحجر'],[17,1,'الإسراء'],[18,75,'الكهف'],[21,1,'الأنبياء'],[23,1,'المؤمنون'],[25,21,'الفرقان'],[27,56,'النمل'],[29,46,'العنكبوت'],[33,31,'الأحزاب'],[36,28,'يس'],[39,32,'الزمر'],[41,47,'فصلت'],[46,1,'الأحقاف'],[51,31,'الذاريات'],[58,1,'المجادلة'],[67,1,'الملك'],[78,1,'النبأ']];
+var APP='';var id=(new URLSearchParams(location.search).get('id')||'').replace(/[^\w-]/g,''),C=null,K=null,pend=0,tmr=null;
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function ar(n){return String(n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d]})}
+function toast(t){var x=$('toast');x.textContent=t;x.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){x.classList.remove('on')},2200)}
+function v(x){if(!x)return null;if('stringValue' in x)return x.stringValue;if('integerValue' in x)return +x.integerValue;if('doubleValue' in x)return x.doubleValue;if('booleanValue' in x)return x.booleanValue;if('mapValue' in x){var o={},f=x.mapValue.fields||{};for(var k in f)o[k]=v(f[k]);return o}return null}
+function fv(x){if(typeof x==='boolean')return {booleanValue:x};if(typeof x==='number')return {integerValue:String(Math.round(x))};if(typeof x==='string')return {stringValue:x};var f={};for(var k in x)f[k]=fv(x[k]);return {mapValue:{fields:f}}}
+function base(){return 'https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(C.projectId)+'/databases/(default)/documents'}
+function key(){return 'key='+encodeURIComponent(C.apiKey)}
+function docName(){return 'projects/'+C.projectId+'/databases/(default)/documents/khatmas/'+id}
+async function load(){var r=await fetch(base()+'/khatmas/'+id+'?'+key());if(!r.ok)throw new Error(r.status===404?'الختمة مو موجودة':'خطأ '+r.status);var j=await r.json(),o={};for(var k in j.fields)o[k]=v(j.fields[k]);o._ut=j.updateTime;o.parts=o.parts||{};K=o}
+async function commit(w){var r=await fetch(base()+':commit?'+key(),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({writes:w})});if(!r.ok)throw new Error(r.status)}
+async function setPart(j,val){var p={};p['j'+j]=val;for(var t=0;t<3;t++){try{await commit([{update:{name:docName(),fields:{parts:fv(p)}},updateMask:{fieldPaths:['parts.j'+j]},currentDocument:{updateTime:K._ut}}]);return}catch(e){var old=K;await load();var c=K.parts['j'+j];if(val.by&&c&&c.by&&c.by!==val.by)throw new Error('هذا الجزء انحجز قبلك')}}throw new Error('حاول مرة ثانية')}
+function myName(){var n=localStorage.getItem('ay-khatma-name')||'';if(!n){n=(prompt('اكتب اسمك (يطلع للناس على الجزء اللي تحجزه):')||'').trim().slice(0,30);if(n)localStorage.setItem('ay-khatma-name',n)}return n}
+function share(){var t=(K.type==='quran'?'📖 ختمة قرآن':'📿 '+K.title)+(K.dead?' إلى روح '+K.for:' لـ'+K.for)+(K.niyya?' — '+K.niyya:'')+'\nاحجز جزء/شارك من هنا 👇\n'+location.href;if(navigator.share){navigator.share({title:'ختمة جماعية',text:t}).catch(function(){});return}location.href='https://wa.me/?text='+encodeURIComponent(t)}
+function render(){var me=localStorage.getItem('ay-khatma-name')||'',h='<section class="hero"><small>'+(K.type==='quran'?'📖 ختمة قرآن جماعية':'📿 '+esc(K.title))+'</small><h1>'+(K.dead?'إلى روح ':'لـ')+esc(K.for)+'</h1>'+(K.niyya?'<p>'+esc(K.niyya)+'</p>':'')+'</section>';
+ if(K.type==='quran'){var done=0,res=0;for(var j=1;j<=30;j++){var p=K.parts['j'+j];if(p&&p.done)done++;else if(p&&p.by)res++}
+  h+='<div class="bar"><i style="width:'+(done/30*100)+'%"></i></div><p class="mut">انقرأ '+ar(done)+' من ٣٠ — محجوز '+ar(res)+'<br>اضغط على جزء فاضي حتى تحجزه</p><div class="grid">';
+  for(var i=1;i<=30;i++){var q=K.parts['j'+i],st=q&&q.done?'done':(q&&q.by?(me&&q.by===me?'mine':'res'):'free');h+='<button class="j '+st+'" data-j="'+i+'"><b>'+ar(i)+'</b><small>'+(st==='free'?'احجز':(st==='done'?'✓ ':'')+esc(q.by))+'</small></button>'}h+='</div>'}
+ else{var pct=Math.min(100,(K.count||0)/(K.target||1)*100);h+='<div class="bar"><i style="width:'+pct+'%"></i></div><p class="cnt"><b id="c">'+ar(K.count||0)+'</b> من '+ar(K.target)+'</p><button class="tap" id="tap">اضغط مع كل ذكر<small>'+esc(K.title)+'</small></button><div class="plus"><button data-p="10">+١٠</button><button data-p="100">+١٠٠</button><button data-p="1000">+١٠٠٠</button></div>'}
+ h+='<button class="btn" id="sh">📤 شارك الختمة</button><div class="app"><b>تطبيق أهل اليقين</b>قرآن، أدعية وزيارات، أذان، ومسبحة — وختمات جماعية'+(APP?'<a class="btn sec" href="'+esc(APP)+'">حمّل التطبيق</a>':'')+'</div>';
+ $('m').innerHTML=h;$('sh').onclick=share;
+ document.querySelectorAll('[data-j]').forEach(function(b){b.onclick=async function(){var j=+b.dataset.j,p=K.parts['j'+j],nm=myName();if(!nm)return;
+  if(!p||!p.by){b.disabled=true;try{await setPart(j,{by:nm,at:Date.now(),done:false});toast('✓ حجزت الجزء '+ar(j))}catch(e){toast(e.message)}await load();render();return}
+  if(p.by===nm&&!p.done){var J=JUZ[j-1];if(confirm('الجزء '+ar(j)+' يبدأ من سورة '+J[2]+' آية '+ar(J[1])+'.\n\nخلّصت قراءته؟')){try{await setPart(j,{by:nm,at:Date.now(),done:true});toast('تقبّل الله 🤍')}catch(e){toast(e.message)}await load();render()}return}
+  toast(p.done?'هذا الجزء انقرأ — تقبّل الله':'هذا الجزء محجوز لـ'+p.by)}});
+ var tap=$('tap');if(tap){var shown=K.count||0;function bump(n){shown+=n;$('c').textContent=ar(shown);pend+=n;clearTimeout(tmr);tmr=setTimeout(function(){var x=pend;pend=0;commit([{transform:{document:docName(),fieldTransforms:[{fieldPath:'count',increment:{integerValue:String(x)}}]}}]).catch(function(){pend+=x})},1500);try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}}tap.onclick=function(){bump(1)};document.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){bump(+b.dataset.p)}})}}
+(async function(){try{if(!id)throw new Error('الرابط ناقص');var r=await fetch(STORE+'config.json',{cache:'no-store'});if(!r.ok)throw new Error('الخدمة مو مفعّلة بعد');var j=await r.json();C=j.firebase;APP=j.appUrl||'';if(!C||!C.apiKey)throw new Error('الخدمة مو مفعّلة بعد');await load();render();setInterval(function(){if(!pend&&!document.hidden)load().then(render).catch(function(){})},20000)}catch(e){$('m').innerHTML='<p class="mut">'+esc(e.message)+'</p>'}})();
+})();
+</script>
+</body>
+</html>
