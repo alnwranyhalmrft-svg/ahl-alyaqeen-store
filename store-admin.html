@@ -22,6 +22,7 @@ button.pri{background:var(--acc);color:#1b1407}button:disabled{opacity:.5}
 .cell{background:#0f1730;border:1px solid var(--line);border-radius:12px;overflow:hidden}.cell img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}.cell div{padding:6px 8px;font-size:12px}.cell button{width:100%;border-radius:0;background:#3a1f25;color:#ffb3ab;padding:7px;font-size:12px}
 #log{white-space:pre-wrap;font-size:13px;color:var(--mut)}.ok{color:var(--ok)}.no{color:var(--no)}
 code{background:#0e1629;border:1px solid var(--line);border-radius:8px;padding:2px 6px;direction:ltr;display:inline-block;word-break:break-all}
+#sync675{position:fixed;inset:0;z-index:50;background:rgba(5,9,20,.8);display:flex;justify-content:center;overflow:auto}.sy-box{width:100%;max-width:720px;background:var(--bg);min-height:100%;padding:12px 14px 40px}.sy-top{display:flex;gap:10px;align-items:center;margin-bottom:10px}.sy-top b{display:block;font-size:17px}.sy-top small{color:var(--mut)}.sy-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.sy-time{font:700 18px monospace;min-width:110px;direction:ltr}.sy-now{margin:12px 0 8px;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--line)}.sy-now p{margin:6px 0 0;font-size:22px;line-height:1.9}.sy-now small{color:var(--acc)}.sy-mark{width:100%;padding:22px!important;font-size:20px!important;background:var(--acc)!important;color:#1b1407!important;position:sticky;top:0;z-index:2}.sy-list{display:grid;gap:4px;max-height:45vh;overflow:auto;margin-top:8px}.sy-row{display:flex;gap:10px;text-align:right;background:#0f1730!important;font-weight:400!important;padding:8px 10px!important}.sy-row em{font-style:normal;font-family:monospace;color:var(--mut);min-width:46px}.sy-row.ok em{color:var(--ok)}.sy-row.on{outline:2px solid var(--acc)}.sy-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px}.sy-err{color:var(--no)}.sy-file{display:inline-block;color:var(--acc);text-decoration:underline;cursor:pointer;margin:0}
 </style>
 </head>
 <body>
@@ -219,6 +220,56 @@ $('selAll').onclick=()=>{cat.images.filter(im=>gfil==='all'||(im.category||'cine
 $('selMove').onclick=async()=>{if(!sel.size){alert('حدد صور أول');return;}const to=$('selTarget').value;cat.images.forEach(im=>{if(sel.has(im.id))im.category=to;});const n=sel.size;try{await saveCat('نقل '+n+' صورة إلى '+catName(to));sel.clear();selMode=false;render();log('✓ انتقلت '+n+' صورة إلى «'+catName(to)+'» — تطلع بالتطبيق خلال دقائق','ok');}catch(e){alert(e.message);}};
 $('selDel').onclick=async()=>{if(!sel.size)return;if(!confirm('تحذف '+sel.size+' صورة من المتجر؟'))return;const gone=cat.images.filter(im=>sel.has(im.id));cat.images=cat.images.filter(im=>!sel.has(im.id));try{await saveCat('حذف '+gone.length+' صورة');for(const im of gone){try{const g=await api(im.file);if(g.ok){const j=await g.json();await api(im.file,{method:'DELETE',body:JSON.stringify({message:'حذف '+im.file,sha:j.sha,branch:cfg.branch})});}}catch(e){}}sel.clear();selMode=false;render();}catch(e){alert(e.message);}};
 const conn3=$('connect').onclick;$('connect').onclick=async()=>{await conn3();if($('setup').classList.contains('done'))paintCat();};
+
+// ================== مزامنة الصوت مع النص ==================
+let DT=null;
+async function loadDT(){if(DT)return DT;for(const u of ['duas-text.json',rawBase()+'duas-text.json']){try{const r=await fetch(u,{cache:'no-store'});if(r.ok){DT=await r.json();return DT;}}catch(e){}}throw new Error('ملف duas-text.json مو موجود بالمستودع — ارفعه ويّا store-admin.html');}
+const fmt=s=>{s=Math.max(0,s||0);const m=Math.floor(s/60),x=Math.floor(s%60);return m+':'+String(x).padStart(2,'0');};
+async function openSync(rec){let D;try{D=(await loadDT()).items[rec.item];}catch(e){alert(e.message);return;}if(!D){alert('ما لگيت نص هذا الدعاء');return;}
+ const key='sync675-'+rec.id;let t={};try{t=JSON.parse(localStorage.getItem(key)||'null')||rec.timing||{};}catch(e){t=rec.timing||{};}
+ if(rec.n&&rec.n!==D.n&&rec.timing){t={};}
+ const L=D.lines;let ptr=0;while(ptr<L.length-1&&t[L[ptr][0]]!=null)ptr++;
+ const ov=document.createElement('div');ov.id='sync675';ov.innerHTML=`<div class="sy-box"><div class="sy-top"><button type="button" data-x>✕</button><div><b></b><small></small></div></div>
+ <audio preload="auto"></audio><p class="sy-err" hidden>ما گدرت أشغّل الصوت من المتجر. <label class="sy-file">📂 اختاره من جهازك<input type="file" accept="audio/*" hidden></label></p>
+ <div class="sy-ctl"><span class="sy-time">0:00</span><button type="button" data-play>▶ تشغيل</button><button type="button" data-back>⏪ ٣ ث</button><button type="button" data-spd>1×</button><button type="button" data-undo>↩ تراجع</button></div>
+ <div class="sy-now"><small></small><p></p></div><button type="button" class="sy-mark" data-mark>👆 هسه بدأ هذا السطر</button>
+ <p class="mut sy-help">شغّل الصوت، وكل ما القارئ يبدي سطر جديد اضغط الزر الكبير (أو زر المسافة بالكيبورد). تگدر تضغط أي سطر بالقائمة حتى ترجعله وتعدّله.</p>
+ <div class="sy-list"></div><div class="sy-foot"><span class="sy-cnt"></span><button type="button" class="pri" data-save>💾 احفظ المزامنة</button></div></div>`;
+ document.body.appendChild(ov);document.body.style.overflow='hidden';
+ ov.querySelector('.sy-top b').textContent=D.title;ov.querySelector('.sy-top small').textContent='بصوت '+rec.name;
+ const A=ov.querySelector('audio');A.src=rawBase()+rec.file;let spd=1;
+ A.onerror=()=>{ov.querySelector('.sy-err').hidden=false;};
+ ov.querySelector('.sy-file input').onchange=e=>{const f=e.target.files[0];if(f){A.src=URL.createObjectURL(f);ov.querySelector('.sy-err').hidden=true;}};
+ const list=ov.querySelector('.sy-list');
+ function paint(){const done=L.filter(l=>t[l[0]]!=null).length;ov.querySelector('.sy-cnt').textContent=done+' من '+L.length+' سطر';
+  ov.querySelector('.sy-now small').textContent='السطر '+(ptr+1)+' من '+L.length+(t[L[ptr][0]]!=null?' · مأشّر على '+fmt(t[L[ptr][0]]):'');ov.querySelector('.sy-now p').textContent=L[ptr][1];
+  list.innerHTML='';L.forEach((l,j)=>{const b=document.createElement('button');b.type='button';b.className='sy-row'+(j===ptr?' on':'')+(t[l[0]]!=null?' ok':'');b.innerHTML='<em></em><span></span>';b.querySelector('em').textContent=t[l[0]]!=null?fmt(t[l[0]]):'--';b.querySelector('span').textContent=l[1];
+   b.onclick=()=>{ptr=j;const prev=j>0?t[L[j-1][0]]:0;const at=t[l[0]]!=null?t[l[0]]:prev;if(at!=null&&isFinite(at))A.currentTime=Math.max(0,at-2);paint();};list.appendChild(b);});
+  const on=list.querySelector('.on');if(on)on.scrollIntoView({block:'nearest'});
+  try{localStorage.setItem(key,JSON.stringify(t));}catch(e){}}
+ function mark(){if(A.paused&&!A.currentTime){A.play().catch(()=>{});return;}const tm=Math.max(0,+(A.currentTime-0.25*spd).toFixed(2));const prev=ptr>0?t[L[ptr-1][0]]:null;if(prev!=null&&tm<prev){alert('هذا الوقت قبل السطر اللي قبله — ارجع للسطر الصحيح');return;}t[L[ptr][0]]=tm;
+  for(let j=ptr+1;j<L.length;j++){if(t[L[j][0]]!=null&&t[L[j][0]]<tm)delete t[L[j][0]];}
+  if(ptr<L.length-1)ptr++;paint();}
+ ov.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.hasAttribute('data-x')){if(Object.keys(t).length&&!confirm('تطلع؟ اللي أشّرته ينحفظ بجهازك وتگدر تكمل بعدين.'))return;A.pause();ov.remove();document.body.style.overflow='';document.removeEventListener('keydown',kd);return;}
+  if(b.hasAttribute('data-play')){if(A.paused)A.play().catch(()=>{ov.querySelector('.sy-err').hidden=false;});else A.pause();return;}
+  if(b.hasAttribute('data-back')){A.currentTime=Math.max(0,A.currentTime-3);return;}
+  if(b.hasAttribute('data-spd')){spd=spd===1?1.25:spd===1.25?1.5:1;A.playbackRate=spd;b.textContent=spd+'×';return;}
+  if(b.hasAttribute('data-undo')){if(ptr>0&&t[L[ptr][0]]==null)ptr--;delete t[L[ptr][0]];if(isFinite(t[L[Math.max(0,ptr-1)][0]]))A.currentTime=Math.max(0,t[L[Math.max(0,ptr-1)][0]]);paint();return;}
+  if(b.hasAttribute('data-mark')){mark();return;}
+  if(b.hasAttribute('data-save')){const miss=L.filter(l=>t[l[0]]==null).length;if(miss){alert('باقي '+miss+' سطر ما مأشّر. كمّلهن قبل الحفظ (اللي سويته محفوظ بجهازك).');return;}
+   b.disabled=true;b.textContent='⏳ جاري الحفظ…';try{const T={};L.forEach(l=>{T[l[0]]=t[l[0]];});
+    for(let k=0;k<3;k++){let r=vcat.recordings.find(x=>x.id===rec.id);if(!r)throw new Error('التسجيل انحذف');r.timing=T;r.n=D.n;await saveV('مزامنة '+D.title+' — '+rec.name);r=vcat.recordings.find(x=>x.id===rec.id);if(r&&r.timing&&Object.keys(r.timing).length===L.length)break;}
+    localStorage.removeItem(key);A.pause();ov.remove();document.body.style.overflow='';document.removeEventListener('keydown',kd);renderV();vlog('✓ انحفظت مزامنة «'+D.title+'» بصوت '+rec.name+' — تشتغل بالتطبيق خلال دقائق','ok');}
+   catch(err){alert('ما انحفظت: '+err.message);b.disabled=false;b.textContent='💾 احفظ المزامنة';}return;}});
+ A.ontimeupdate=()=>{ov.querySelector('.sy-time').textContent=fmt(A.currentTime)+(isFinite(A.duration)?' / '+fmt(A.duration):'');};
+ A.onplay=A.onpause=()=>{ov.querySelector('[data-play]').textContent=A.paused?'▶ تشغيل':'⏸ إيقاف';};
+ function kd(e){if(e.target.closest&&e.target.closest('input,textarea,select'))return;if(e.code==='Space'){e.preventDefault();mark();}else if(e.key==='Backspace'){e.preventDefault();ov.querySelector('[data-undo]').click();}}
+ document.addEventListener('keydown',kd);paint();}
+function vlog(t,c){const d=document.createElement('div');d.textContent=t;if(c)d.className=c;$('vlog').appendChild(d);}
+const renderV0=renderV;renderV=function(){renderV0();const rows=[...$('vgrid').children];const all=vcat.adhan.map(a=>({k:'adhan',x:a})).concat(vcat.recordings.map(r=>({k:'rec',x:r})));
+ rows.forEach((d,i)=>{const o=all[i];if(!o||o.k!=='rec')return;d.style.flexWrap='wrap';const ok=o.x.timing&&Object.keys(o.x.timing).length;const s=d.querySelector('small');s.textContent+=ok?' · ✓ متزامن مع النص':' · ⚠ مو متزامن';
+  const b=document.createElement('button');b.type='button';b.textContent=ok?'🎯 عدّل المزامنة':'🎯 زامن مع النص';b.style.cssText='flex-basis:100%;background:'+(ok?'#24304e':'var(--acc)')+';color:'+(ok?'var(--ink)':'#1b1407');b.onclick=()=>openSync(o.x);d.appendChild(b);});};
 if(localStorage.getItem('store657-token')&&localStorage.getItem('store657-owner'))setTimeout(()=>$('connect').click(),50);
 $('copyurl').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText($('appurlv').textContent);$('copyurl').textContent='انسخ ✓';};
 const drop=$('drop');drop.onclick=()=>$('files').click();$('files').onchange=e=>addFiles(e.target.files);
