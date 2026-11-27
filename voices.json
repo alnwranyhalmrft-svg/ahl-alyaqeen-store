@@ -1,12 +1,5 @@
 {
  "version": 1,
  "adhan": [],
- "recordings": [
-  {
-   "id": "nudba-471-mwyo5sv6",
-   "item": "nudba",
-   "name": "دعاء الندبه - مهدي سماواتي",
-   "file": "voices/nudba-471-mwyo5sv6.mp3"
-  }
- ]
+ "recordings": []
 }
